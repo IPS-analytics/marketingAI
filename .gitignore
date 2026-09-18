@@ -1,0 +1,22 @@
+.env
+.env.local
+.env.*.local
+!.env.example
+.DS_Store
+**/node_modules/
+**/target/
+
+# Local-only docs (not published to GitHub)
+PROJECT.md
+
+# IDE
+**/.idea/
+**/*.iml
+
+# TLS private keys / certs
+*.key
+*.pem
+*.p12
+*.pfx
+Ai/certificate.key
+Ai/certificate_ca.crt

@@ -1,0 +1,49 @@
+services:
+  postgres-tables:
+    image: postgres:16
+    container_name: postgres-tables
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-kotlerdb}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in Ai/.env}
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./init/tables:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $$POSTGRES_USER" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app-network
+
+  kotler-app:
+    build: .
+    container_name: kotler-app
+    env_file:
+      - .env
+    ports:
+      - "${SERVER_PORT:-8080}:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-tables:5432/${POSTGRES_DB:-kotlerdb}
+      SPRING_PROFILES_ACTIVE: docker
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      TOKEN_SIGNING_KEY: ${TOKEN_SIGNING_KEY}
+      JWT_SECRET: ${JWT_SECRET:-}
+      DEEPSEEK_API_KEY: ${DEEPSEEK_API_KEY:-}
+      DEEPSEEK_MODEL: ${DEEPSEEK_MODEL:-deepseek-chat}
+      DEEPSEEK_API_URL: ${DEEPSEEK_API_URL:-https://api.deepseek.com/chat/completions}
+    depends_on:
+      postgres-tables:
+        condition: service_healthy
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge

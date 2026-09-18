@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    { "source": "/((?!support\\.js|kotler-api\\.js|config\\.js).*)", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" }
+      ]
+    }
+  ]
+}
