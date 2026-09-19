@@ -49,7 +49,8 @@ public class SecurityConfiguration {
                     corsConfiguration.setAllowedOriginPatterns(List.of("*"));
                     corsConfiguration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     corsConfiguration.setAllowedHeaders(List.of("*"));
-                    corsConfiguration.setAllowCredentials(true);
+                    // Bearer в заголовке — cookies не нужны; false проще для Vercel → Render
+                    corsConfiguration.setAllowCredentials(false);
                     return corsConfiguration;
                 }))
                 .authorizeHttpRequests(request -> request

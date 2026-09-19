@@ -160,9 +160,6 @@
           </sc-for>
         </div>
 
-        <div style="margin-top:36px;text-align:center;font-size:12.5px;color:var(--k-fg2)">
-          Командная палитра — <span style="border:1px solid var(--k-line);border-radius:6px;padding:2px 6px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px">⌘K</span>
-        </div>
       </div>
     </sc-if>
 
@@ -997,7 +994,7 @@
         <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:14px">
           <label style="display:flex;flex-direction:column;gap:6px">
             <span style="font-size:12.5px;font-weight:500">Логин</span>
-            <input value="{{ auth.username }}" onChange="{{ auth.onUser }}" placeholder="username" style="border:1px solid var(--k-line);background:var(--k-bg);border-radius:10px;padding:11px 12px;font-size:14px;outline:0" />
+            <input value="{{ auth.username }}" onChange="{{ auth.onUser }}" placeholder="Ваш логин" style="border:1px solid var(--k-line);background:var(--k-bg);border-radius:10px;padding:11px 12px;font-size:14px;outline:0" />
           </label>
           <sc-if value="{{ auth.isReg }}" hint-placeholder-val="{{ false }}">
             <label style="display:flex;flex-direction:column;gap:6px">
@@ -1556,10 +1553,10 @@ const API_FORMS = {
     ]
   },
   gads: {
-    title: "Google Ads", auth: "Developer token + OAuth",
-    note: "Developer token берётся в Google Ads API Center, refresh token — из OAuth-клиента с доступом к аккаунту.",
+    title: "Google Ads", auth: "Токен доступа + OAuth",
+    note: "Нужны токен доступа из Google Ads и refresh token из OAuth-клиента с доступом к аккаунту.",
     fields: [
-      { key: "dev", label: "Developer token", ph: "Abc-123_dEf", mono: true },
+      { key: "dev", label: "Токен доступа", ph: "Abc-123_dEf", mono: true },
       { key: "customer", label: "Customer ID", ph: "123-456-7890" },
       { key: "refresh", label: "OAuth refresh token", ph: "1//0gG...", mono: true }
     ]
@@ -2026,7 +2023,7 @@ class Component extends DCLogic {
     if (!t) return;
     const api = window.KotlerApi;
     if (!api || !api.isLoggedIn()) {
-      this.setState({ authOpen: true, authMode: "login", authError: "Войдите, чтобы писать настоящей ИИ (заглушка отключена)." });
+      this.setState({ authOpen: true, authMode: "login", authError: "Войдите в аккаунт, чтобы пользоваться чатом." });
       return;
     }
     const key = this.state.view;
@@ -2034,9 +2031,9 @@ class Component extends DCLogic {
     const msgs = prev.concat([{ role: "u", text: t }, { role: "a", text: "", typing: true }]);
     this.setState((s) => ({ chat: Object.assign({}, s.chat, { [key]: msgs }), draft: "", blockDraft: "" }));
     api.askKotler(t, key === "home" ? "Kotler" : "Kotler · " + key)
-      .then((answer) => this.finishAiMessage(key, answer || "Пустой ответ от Kotler."))
+      .then((answer) => this.finishAiMessage(key, answer || "Пока нет ответа. Попробуйте ещё раз."))
       .catch((err) => {
-        this.finishAiMessage(key, "Ошибка API: " + (err && err.message ? err.message : "неизвестно"));
+        this.finishAiMessage(key, "Не удалось получить ответ. " + (err && err.message ? err.message : "Попробуйте позже."));
       });
   }
 
@@ -2309,7 +2306,7 @@ class Component extends DCLogic {
         const name = st.userName || (logged ? "Пользователь" : "Гость");
         return [
           { label: "Имя", value: name },
-          { label: "Статус", value: logged ? "Авторизован · реальная ИИ" : "Нужен вход для чата" },
+          { label: "Статус", value: logged ? "В аккаунте" : "Гость" },
           { label: "Роль", value: "Маркетолог" },
           { label: "Тариф", value: (PLANS.find((p) => p.key === (st.plan || "pro")) || PLANS[1]).name },
           { label: "Часовой пояс", value: "Europe/Moscow" }
@@ -2328,7 +2325,7 @@ class Component extends DCLogic {
           open: !!st.authOpen,
           isReg: isReg,
           title: isReg ? "Регистрация" : "Вход в Kotler",
-          subtitle: isReg ? "Создайте аккаунт для доступа к ИИ." : "После входа чат идёт в бэкенд (DeepSeek / ваша модель).",
+          subtitle: isReg ? "Создайте аккаунт, чтобы сохранять диалоги и получать ответы Kotler." : "Войдите, чтобы продолжить работу с Kotler.",
           username: st.authUser || "",
           email: st.authEmail || "",
           password: st.authPass || "",

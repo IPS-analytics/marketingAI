@@ -58,8 +58,7 @@
       body: JSON.stringify({ username, password })
     });
     if (!res.ok) {
-      const err = await res.text();
-      throw new Error(err || "Неверный логин или пароль");
+      throw new Error(await friendlyAuthError(res, "Неверный логин или пароль"));
     }
     const data = await res.json();
     return saveTokens(data, username);
@@ -72,11 +71,29 @@
       body: JSON.stringify({ username, email, password })
     });
     if (!res.ok) {
-      const err = await res.text();
-      throw new Error(err || "Не удалось зарегистрироваться");
+      throw new Error(await friendlyAuthError(res, "Не удалось зарегистрироваться"));
     }
     const data = await res.json();
     return saveTokens(data, username);
+  }
+
+  async function friendlyAuthError(res, fallback) {
+    if (res.status === 405) {
+      return "Сервер входа недоступен. Обновите страницу или зайдите позже.";
+    }
+    if (res.status >= 500) {
+      return "Сервис временно недоступен. Попробуйте через минуту.";
+    }
+    const err = (await res.text()).trim();
+    if (!err || err.startsWith("<!") || err.startsWith("{")) {
+      try {
+        const j = JSON.parse(err);
+        return j.message || j.error || fallback;
+      } catch (_) {
+        return fallback;
+      }
+    }
+    return err.length > 180 ? fallback : err;
   }
 
   async function refresh() {
