@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap">
 <script src="./config.js"></script>
 <script src="./support.js"></script>
 <script src="./kotler-api.js"></script>
@@ -13,22 +15,23 @@
 <style>
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
-  body{font-family:system-ui,-apple-system,"SF Pro Text","Segoe UI","Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  body{font-family:"Satoshi","Inter",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased}
   a{color:var(--k-accent-hover);text-decoration:none}
   a:hover{color:var(--k-accent)}
   textarea,input,button{font:inherit;color:inherit}
   :root{
-    --k-accent:#4F46E5;--k-accent-hover:#4338CA;--k-accent-bright:#818CF8;
-    --k-bg:#FFFFFF;--k-bg2:#F6F7FB;--k-card:#FFFFFF;--k-fg:#12131A;--k-fg2:#6A6E80;
-    --k-line:#E4E5EE;--k-soft:#E5E7FB;--k-soft-fg:#3730A3;
-    --k-sh:0 1px 2px rgba(17,24,39,.04),0 8px 24px rgba(17,24,39,.06);
-    --k-sh-hi:0 2px 4px rgba(17,24,39,.05),0 16px 40px rgba(17,24,39,.10);
-    --k-skel:#EFF1F4;
+    /* maib.ai palette: navy + blue accent + Satoshi */
+    --k-accent:#2F6BFF;--k-accent-hover:#0B1E3A;--k-accent-bright:#5B8CFF;
+    --k-bg:#FFFFFF;--k-bg2:#F5F6F8;--k-card:#FFFFFF;--k-fg:#0B1E3A;--k-fg2:#6B7280;
+    --k-line:#EEF0F3;--k-soft:#E8EEFF;--k-soft-fg:#0B1E3A;
+    --k-sh:0 1px 2px rgba(11,30,58,.04),0 8px 24px rgba(11,30,58,.08);
+    --k-sh-hi:0 2px 4px rgba(11,30,58,.06),0 16px 40px rgba(11,30,58,.12);
+    --k-skel:#EEF0F3;
   }
   :root[data-k-theme="dark"]{
-    --k-accent:#6366F1;--k-accent-hover:#4F46E5;--k-accent-bright:#A5B4FC;
-    --k-bg:#0E0F15;--k-bg2:#14161F;--k-card:#161824;--k-fg:#F2F3F7;--k-fg2:#9A9FB2;
-    --k-line:rgba(255,255,255,.09);--k-soft:rgba(49,46,129,.5);--k-soft-fg:#C7D2FE;
+    --k-accent:#2F6BFF;--k-accent-hover:#5B8CFF;--k-accent-bright:#7AA3FF;
+    --k-bg:#0A1830;--k-bg2:#0B1E3A;--k-card:#122744;--k-fg:#F5F7FA;--k-fg2:#C7D0DD;
+    --k-line:rgba(255,255,255,.10);--k-soft:rgba(47,107,255,.22);--k-soft-fg:#C7D0DD;
     --k-sh:0 1px 2px rgba(0,0,0,.4),0 8px 24px rgba(0,0,0,.35);
     --k-sh-hi:0 2px 6px rgba(0,0,0,.45),0 18px 44px rgba(0,0,0,.5);
     --k-skel:rgba(255,255,255,.06);
@@ -166,7 +169,7 @@
     <sc-if value="{{ isLearn }}" hint-placeholder-val="{{ false }}">
       <div style="max-width:900px;margin:0 auto;padding:40px 24px 72px;animation:kFade 200ms ease">
         <h2 style="margin:0 0 10px;font-size:26px;font-weight:600;letter-spacing:-.025em">Обучение</h2>
-        <p style="margin:0 0 32px;font-size:14.5px;line-height:1.65;color:var(--k-fg2);max-width:62ch;text-wrap:pretty">Kotler — это шесть блоков над вашими маркетинговыми данными и один чат поверх них. Ниже — что делает каждый блок, какие данные ему нужны и какие вопросы ему задают чаще всего.</p>
+        <p style="margin:0 0 32px;font-size:14.5px;line-height:1.65;color:var(--k-fg2);max-width:62ch;text-wrap:pretty">Kotler — это семь блоков над вашими маркетинговыми данными и один чат поверх них. Ниже — что делает каждый блок, какие данные ему нужны и какие вопросы ему задают чаще всего.</p>
 
         <div style="display:grid;grid-template-columns:{{ learnStepCols }};gap:16px;margin-bottom:40px">
           <sc-for list="{{ learnSteps }}" as="s" hint-placeholder-count="3">
@@ -747,6 +750,74 @@
           </div>
         </sc-if>
 
+        <sc-if value="{{ recs.show }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;gap:16px;margin-top:16px">
+
+            <sc-if value="{{ recs.hasStrategy }}" hint-placeholder-val="{{ false }}">
+              <div style="background:var(--k-card);border:1px solid var(--k-accent);border-radius:16px;padding:24px;box-shadow:0 0 0 3px var(--k-soft),var(--k-sh)">
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                  <span style="display:inline-flex;align-items:center;white-space:nowrap;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:999px;background:var(--k-soft);color:var(--k-soft-fg)">Стратегия</span>
+                  <div style="font-size:15px;font-weight:600;letter-spacing:-.01em">{{ recs.strategyTitle }}</div>
+                </div>
+                <p style="margin:0 0 20px;font-size:13.5px;line-height:1.65;color:var(--k-fg2);max-width:76ch;text-wrap:pretty">{{ recs.strategyText }}</p>
+                <div style="display:grid;grid-template-columns:{{ recs.pillarCols }};gap:14px;margin-bottom:20px">
+                  <sc-for list="{{ recs.pillars }}" as="p" hint-placeholder-count="3">
+                    <div style="background:var(--k-bg2);border:1px solid var(--k-line);border-radius:13px;padding:16px 17px;display:flex;flex-direction:column;gap:8px;animation:kRise 380ms cubic-bezier(.2,.8,.2,1) both {{ p.delay }}">
+                      <div style="display:flex;align-items:baseline;gap:9px">
+                        <span style="font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--k-accent);font-weight:600">{{ p.n }}</span>
+                        <span style="font-size:13.5px;font-weight:600">{{ p.title }}</span>
+                      </div>
+                      <div style="font-size:12.5px;line-height:1.6;color:var(--k-fg2);text-wrap:pretty">{{ p.text }}</div>
+                      <div style="margin-top:auto;padding-top:6px;font-size:12px;font-weight:600;color:var(--k-fg)">{{ p.metric }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+                <div style="border-top:1px solid var(--k-line);padding-top:18px">
+                  <div style="font-size:12.5px;font-weight:600;margin-bottom:12px">Сводка рекомендаций по каналам</div>
+                  <div style="display:grid;grid-template-columns:{{ recs.digestCols }};gap:10px 22px">
+                    <sc-for list="{{ recs.digest }}" as="d" hint-placeholder-count="6">
+                      <div style="display:flex;gap:10px;align-items:flex-start;font-size:12.5px;line-height:1.55">
+                        <button onClick="{{ d.open }}" style="flex:none;border:1px solid var(--k-line);background:var(--k-bg2);color:var(--k-fg2);border-radius:999px;padding:3px 10px;font-size:11px;font-weight:600;white-space:nowrap;cursor:pointer;transition:all 200ms ease" style-hover="border-color:var(--k-accent);color:var(--k-accent-hover)">{{ d.src }}</button>
+                        <span style="color:var(--k-fg2);text-wrap:pretty">{{ d.text }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                  <div style="margin-top:16px;font-size:12px;line-height:1.55;color:var(--k-fg2);max-width:80ch;text-wrap:pretty">{{ recs.note }}</div>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ recs.hasItems }}" hint-placeholder-val="{{ true }}">
+              <div style="background:var(--k-card);border:1px solid var(--k-line);border-radius:16px;padding:22px;box-shadow:var(--k-sh)">
+                <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px">
+                  <div>
+                    <div style="font-size:14px;font-weight:600;margin-bottom:3px">Рекомендации</div>
+                    <div style="font-size:12.5px;color:var(--k-fg2)">{{ recs.sub }}</div>
+                  </div>
+                  <div style="font-size:12px;color:var(--k-fg2);white-space:nowrap">{{ recs.count }}</div>
+                </div>
+                <div style="display:flex;flex-direction:column;gap:10px">
+                  <sc-for list="{{ recs.items }}" as="r" hint-placeholder-count="4">
+                    <div style="{{ r.cardStyle }}" style-hover="border-color:var(--k-accent);box-shadow:0 0 0 3px var(--k-soft)">
+                      <div style="display:flex;align-items:flex-start;gap:12px;flex-wrap:wrap">
+                        <span style="{{ r.prioStyle }}">{{ r.prio }}</span>
+                        <span style="font-size:13.5px;font-weight:600;line-height:1.45;flex:1;min-width:180px;text-wrap:pretty">{{ r.title }}</span>
+                      </div>
+                      <div style="font-size:12.5px;line-height:1.65;color:var(--k-fg2);max-width:84ch;text-wrap:pretty">{{ r.text }}</div>
+                      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:4px">
+                        <span style="display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600">
+                          <span style="width:5px;height:5px;border-radius:50%;background:var(--k-accent)"></span>{{ r.effect }}
+                        </span>
+                        <button onClick="{{ r.ask }}" style="flex:none;border:1px solid var(--k-line);background:var(--k-card);color:var(--k-fg2);border-radius:9px;padding:7px 12px;font-size:12px;font-weight:500;cursor:pointer;transition:all 200ms ease" style-hover="border-color:var(--k-accent);color:var(--k-accent-hover)">Разобрать в чате</button>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </sc-if>
+
         <sc-if value="{{ cur.showOnboarding }}" hint-placeholder-val="{{ false }}">
           <div style="background:var(--k-card);border:1px solid var(--k-line);border-radius:18px;padding:36px;box-shadow:var(--k-sh);max-width:720px">
             <div style="width:100%;height:132px;border-radius:12px;border:1px dashed var(--k-line);background-image:repeating-linear-gradient(135deg,var(--k-bg2) 0 8px,transparent 8px 16px);display:flex;align-items:center;justify-content:center;margin-bottom:26px">
@@ -1073,6 +1144,30 @@ const BLOCKS = [
     suggestions: ["Построй воронку до заявки", "Сравни каналы по атрибуции"]
   },
   {
+    key: "social", name: "Социальные сети", short: "Соцсети", icon: "share",
+    subtitle: "Сообщества, охваты и вовлечённость по площадкам",
+    connected: true,
+    chartTitle: "Вовлечения по дням", listTitle: "Сети по доле вовлечений",
+    promptHint: "Контекстный чат по соцсетям",
+    promptPlaceholder: "Спроси про охваты, посты и подписчиков...",
+    metrics: [
+      { label: "Подписчики, все сети", value: "460 100", delta: "+2,9%", up: true },
+      { label: "Охват за 14 дней", value: "2,96 млн", delta: "+11,2%", up: true },
+      { label: "Вовлечения", value: "3 690", delta: "+16,4%", up: true },
+      { label: "Средний ER", value: "4,5%", delta: "+0,7 п.п.", up: true }
+    ],
+    chart: [61, 55, 68, 74, 66, 82, 71, 64, 79, 86, 73, 91, 84, 95],
+    rows: [
+      { label: "VK", value: "31,4%", p: 100 },
+      { label: "Telegram", value: "24,6%", p: 78 },
+      { label: "Instagram", value: "16,2%", p: 52 },
+      { label: "YouTube", value: "13,1%", p: 42 },
+      { label: "Одноклассники", value: "8,3%", p: 26 },
+      { label: "Дзен", value: "6,4%", p: 20 }
+    ],
+    suggestions: ["Какие посты дали больше всего заявок?", "Сравни VK и Telegram по ER", "Когда лучше публиковать?"]
+  },
+  {
     key: "mktg", name: "Аналитика маркетинга", short: "Аналитика", icon: "pulse",
     subtitle: "Сводные метрики всех каналов в одном отчёте",
     connected: true,
@@ -1125,6 +1220,11 @@ const EXTRA = {
     details: ["События и параметры GA4", "Воронки до заявки и покупки", "Модели атрибуции по каналам"],
     learn: "Достраивает картину там, где рекламных данных не хватает: события, шаги воронки, атрибуция. Полезен, когда нужно понять, на каком шаге теряются пользователи, а не только сколько стоил клик.",
     need: "Роль «Читатель» в ресурсе GA4"
+  },
+  social: {
+    details: ["Подписчики и охваты по площадкам", "Вовлечённость постов и форматов", "Переходы на сайт и заявки из соцсетей"],
+    learn: "Собирает статистику сообществ и каналов в одном месте: VK, Telegram, Instagram, Одноклассники, YouTube, Дзен и TikTok. Показывает, какие форматы и площадки дают вовлечённость, а какие — переходы и заявки, и подсказывает время публикаций. Посты не публикуются — блок только читает статистику.",
+    need: "Доступ на чтение статистики сообществ и каналов"
   },
   mktg: {
     details: ["Все каналы в одном отчёте", "CPL, ROMI и доля заявок", "Готовые сводки для руководителя"],
@@ -1280,7 +1380,122 @@ const DEEP = {
       { title: "Аудитория", rows: [{ l: "Новые", v: 61 }, { l: "Вернувшиеся", v: 39 }] }
     ],
     splitBase: { label: "Пользователи", total: 84200, cpa: 0 }
+  },
+  social: {
+    segTitle: "Площадки",
+    cols: ["Сеть", "Подписчики", "Охват", "ER", "Переходы", "Заявки"],
+    segs: [
+      { name: "VK", subs: 148200, reach: 862000, er: 4.6, visits: 9420, goals: 318, posts: 42 },
+      { name: "Telegram", subs: 96400, reach: 604000, er: 6.1, visits: 7860, goals: 286, posts: 68 },
+      { name: "Instagram", subs: 41200, reach: 318000, er: 5.8, visits: 3240, goals: 112, posts: 46 },
+      { name: "YouTube", subs: 61300, reach: 438000, er: 3.4, visits: 3120, goals: 124, posts: 12 },
+      { name: "Одноклассники", subs: 54800, reach: 296000, er: 2.8, visits: 1980, goals: 61, posts: 36 },
+      { name: "Дзен", subs: 34700, reach: 268000, er: 3.1, visits: 2410, goals: 88, posts: 24 },
+      { name: "TikTok", subs: 23500, reach: 172000, er: 5.2, visits: 1140, goals: 29, posts: 31 }
+    ],
+    cells: (s, f) => [f.num(s.subs), f.num(s.reach), s.er.toFixed(1).replace(".", ",") + "%", f.num(s.visits), f.num(s.goals)],
+    tip: (s, f, t) => [
+      { l: "Подписчики", v: f.num(s.subs) + " (" + Math.round(s.subs / t.subs * 100) + "% от всех)" },
+      { l: "Охват за 14 дней", v: f.num(s.reach) },
+      { l: "Публикаций за период", v: f.num(s.posts) + " · " + f.num(s.reach / s.posts) + " охвата на пост" },
+      { l: "ER", v: s.er.toFixed(1).replace(".", ",") + "%" },
+      { l: "Вовлечения", v: f.num(s.reach * s.er / 100) },
+      { l: "Переходы на сайт", v: f.num(s.visits) + " · CTR " + (s.visits / s.reach * 100).toFixed(2).replace(".", ",") + "%" },
+      { l: "Заявки", v: f.num(s.goals) + " · конверсия " + (s.goals / s.visits * 100).toFixed(1).replace(".", ",") + "%" },
+      { l: "Доля заявок из соцсетей", v: Math.round(s.goals / t.goals * 100) + "%" }
+    ],
+    funnelTitle: "От охвата до заявки",
+    funnel: [
+      { label: "Охват", v: 2960000 },
+      { label: "Вовлечения", v: 131900 },
+      { label: "Переходы на сайт", v: 29170 },
+      { label: "Целевые действия", v: 4890 },
+      { label: "Заявки", v: 1018 }
+    ],
+    splits: [
+      { title: "Площадки", rows: [{ l: "VK", v: 33 }, { l: "Telegram", v: 27 }, { l: "Instagram", v: 11 }, { l: "YouTube", v: 11 }, { l: "Одноклассники", v: 7 }, { l: "Дзен", v: 7 }, { l: "TikTok", v: 4 }] },
+      { title: "Форматы", rows: [{ l: "Короткие видео", v: 38 }, { l: "Посты с фото", v: 27 }, { l: "Сторис", v: 19 }, { l: "Лонгриды", v: 16 }] },
+      { title: "Время публикации", rows: [{ l: "09:00 — 12:00", v: 31 }, { l: "12:00 — 17:00", v: 24 }, { l: "17:00 — 21:00", v: 33 }, { l: "21:00 — 09:00", v: 12 }] }
+    ],
+    splitBase: { label: "Переходы", total: 29170, cpa: 0 }
   }
+};
+
+const RECS = {
+  direct: {
+    sub: "Что сделать в Яндекс Директе на следующей неделе",
+    items: [
+      { p: "high", title: "Перераспределить бюджет в пользу поиска по бренду", text: "Брендовые запросы дают заявки дешевле сети в 2,4 раза, но упираются в дневной лимит уже к 15:00. Поднимите лимит на 30% и снимите ограничение по времени.", effect: "≈ +45 заявок в месяц при том же CPL" },
+      { p: "high", title: "Отключить 6 площадок РСЯ с нулевой конверсией", text: "На них ушло 84 000 ₽ за 30 дней без единой заявки. Добавьте их в запрещённые площадки и перепроверьте список через две недели.", effect: "экономия ≈ 84 000 ₽ в месяц" },
+      { p: "mid", title: "Разделить мобильный и десктопный трафик", text: "На мобильных конверсия ниже на 38% при том же CPC. Вынесите мобильные в отдельную кампанию с понижающей корректировкой ставок.", effect: "CPL −12% на мобильном трафике" },
+      { p: "low", title: "Добавить быстрые ссылки и уточнения в топ-10 объявлений", text: "У половины групп заполнены не все расширения. Это самый дешёвый способ поднять CTR без изменения ставок.", effect: "CTR +0,4–0,8 п.п." }
+    ]
+  },
+  metrika: {
+    sub: "Что исправить на сайте по данным Метрики",
+    items: [
+      { p: "high", title: "Починить шаг «Оформление» в корзине", text: "На переходе от корзины к оформлению теряется 61% пользователей, на мобильных — 72%. В вебвизоре видно повторные нажатия на кнопку оплаты.", effect: "+1,1 п.п. к конверсии сайта" },
+      { p: "high", title: "Ускорить загрузку каталога", text: "Медиана загрузки каталога 4,3 с против 1,9 с на остальных страницах. Отказы на каталоге выше среднего в 1,7 раза.", effect: "−15% отказов на входе в каталог" },
+      { p: "mid", title: "Настроить цели на микроконверсии", text: "Сейчас отслеживается только отправка формы. Без цели на клик по телефону и открытие мессенджера часть заявок не попадает в отчёты.", effect: "точность атрибуции по всем каналам" },
+      { p: "low", title: "Собрать сегмент вернувшихся без покупки", text: "8 400 человек заходили 3+ раза и не оформили заказ — готовая аудитория для ретаргетинга в Директе и соцсетях.", effect: "база для кампании возврата" }
+    ]
+  },
+  gads: {
+    sub: "Что сделать в Google Ads",
+    items: [
+      { p: "high", title: "Перевести две кампании на tCPA", text: "Кампании с ручными ставками набрали больше 50 конверсий в месяц — достаточно данных для автостратегии. Стартовая цель — текущий CPA минус 10%.", effect: "CPA −10–15% за 3 недели" },
+      { p: "high", title: "Добавить минус-слова из поисковых запросов", text: "23% расхода уходит на запросы с «бесплатно», «своими руками» и названиями конкурентов без коммерческого интента.", effect: "экономия ≈ 18% бюджета" },
+      { p: "mid", title: "Разделить Performance Max по маржинальности", text: "Сейчас в одном фиде товары с разной маржой, алгоритм откручивает дешёвые. Разнесите на две кампании с разными целями.", effect: "рост выручки при том же расходе" },
+      { p: "low", title: "Проверить пересечение с Директом по брендовым запросам", text: "Обе системы выкупают один и тот же брендовый трафик и подогревают ставки друг другу.", effect: "−7% CPC по бренду" }
+    ]
+  },
+  ga: {
+    sub: "Что настроить в GA4",
+    items: [
+      { p: "high", title: "Доразметить события покупки", text: "У 18% событий purchase не передаётся value и items — выручка в отчётах занижена, e-commerce-воронка неполная.", effect: "корректный ROMI в сводном отчёте" },
+      { p: "high", title: "Исключить внутренний трафик и спам-рефералы", text: "Офисные IP и три реферальных домена дают около 6% сессий с нулевой глубиной и портят конверсию.", effect: "чистые данные по каналам" },
+      { p: "mid", title: "Собрать аудитории для ремаркетинга", text: "Просмотр карточки без добавления в корзину и брошенная корзина — две аудитории, которые нужно передать в Google Ads.", effect: "готовые сегменты для рекламы" },
+      { p: "low", title: "Включить экспорт в BigQuery", text: "Стандартные отчёты обрезают выборки на длинных периодах. Экспорт даст полные данные для сквозной аналитики.", effect: "отчёты без семплирования" }
+    ]
+  },
+  video: {
+    sub: "Что улучшить в видеопроизводстве",
+    items: [
+      { p: "high", title: "Сократить первые 3 секунды роликов", text: "Досматриваемость падает на 41% до пятой секунды — заставка с логотипом съедает внимание. Начинайте с проблемы клиента.", effect: "+18% досмотров до половины" },
+      { p: "high", title: "Сделать вертикальные версии топ-3 роликов", text: "Горизонтальные ролики в вертикальных лентах теряют до 60% охвата. Пересборка обойдётся дешевле новой съёмки.", effect: "охват в Shorts и Reels без новых съёмок" },
+      { p: "mid", title: "Добавить титры по умолчанию", text: "Больше 70% просмотров идёт без звука. Ролики без титров теряют смысл в первые секунды.", effect: "+9% удержания" },
+      { p: "low", title: "Протестировать две концовки с разным призывом", text: "Один вариант ведёт на сайт, второй — в мессенджер. Разница в заявках будет видна на 2 000 просмотров.", effect: "данные для выбора CTA" }
+    ]
+  },
+  social: {
+    sub: "Что сделать в соцсетях",
+    items: [
+      { p: "high", title: "Перенести часть бюджета контента в Telegram и Instagram", text: "ER в Telegram 6,1%, в Instagram 5,8% против 4,6% в VK, а публикаций там в полтора раза меньше. Поднимите частоту до 5 постов в неделю на каждой площадке.", effect: "≈ +190 заявок из соцсетей в месяц" },
+      { p: "high", title: "Сместить публикации на 17:00–21:00", text: "Этот интервал даёт 33% переходов, но на него приходится только четверть постов. Утренние публикации проседают по вовлечению.", effect: "+14% переходов без нового контента" },
+      { p: "mid", title: "Масштабировать короткие видео", text: "Короткие видео дают 38% всех переходов при наименьшей доле публикаций. TikTok и Reels с ER 5,2–5,8% пока недогружены.", effect: "рост охвата при том же объёме работ" },
+      { p: "mid", title: "Добавить utm-метки во все ссылки в профилях", text: "Часть переходов из Instagram и Одноклассников попадает в «прямые заходы», поэтому вклад соцсетей в отчётах занижен.", effect: "видимость заявок из соцсетей в сквозной аналитике" },
+      { p: "low", title: "Пересобрать контент-план Одноклассников", text: "36 публикаций в месяц дают ER 2,8% и 61 заявку — худший показатель на пост. Сократите частоту и оставьте форматы с фото.", effect: "высвобождение ресурса редакции" }
+    ]
+  }
+};
+
+const STRATEGY = {
+  headline: "Базовая стратегия на квартал",
+  text: "Данные по шести каналам сходятся к одному выводу: платный трафик работает на пределе эффективности, а рост дешевле искать в органике и на сайте. Ближайший квартал строится вокруг трёх шагов — снять потери, перераспределить бюджет, укрепить измерение.",
+  pillars: [
+    { n: "01", title: "Убрать потери", text: "Отключить неэффективные площадки РСЯ, минусовать нецелевые запросы в Google Ads, пересобрать контент-план Одноклассников. Высвобождает около 140 000 ₽ в месяц без падения заявок.", metric: "≈ 140 000 ₽ / мес" },
+    { n: "02", title: "Переложить бюджет в точки роста", text: "Брендовый поиск, Telegram и Instagram, короткие видео. Все три направления дают заявки дешевле среднего CPL и не выбирают доступный объём.", metric: "CPL −12–18%" },
+    { n: "03", title: "Закрыть провал на сайте", text: "Шаг оформления заказа и скорость каталога — самые дорогие потери воронки: трафик уже оплачен. Исправление влияет на все каналы одновременно.", metric: "+1,1 п.п. конверсии" }
+  ],
+  digest: [
+    { src: "Директ", text: "Перераспределить бюджет в брендовый поиск, отключить 6 площадок РСЯ" },
+    { src: "Google Ads", text: "Перевести две кампании на tCPA, добавить минус-слова" },
+    { src: "Метрика", text: "Починить шаг оформления и ускорить каталог" },
+    { src: "GA4", text: "Доразметить purchase, исключить внутренний трафик" },
+    { src: "Соцсети", text: "Нагрузить Telegram и Instagram, сместить публикации на вечер" },
+    { src: "Видео", text: "Сократить вступления, сделать вертикальные версии" }
+  ],
+  note: "Приоритеты пересчитываются при каждом обновлении данных. Порядок шагов важен: измерение до перераспределения бюджета, иначе результат нечем подтвердить."
 };
 
 const MK = {
@@ -1313,7 +1528,7 @@ const PLANS = [
   {
     key: "pro", name: "Про", price: "12 900 ₽", period: "в месяц",
     tagline: "Все каналы и сводная аналитика",
-    features: ["Все 6 блоков", "10 000 запросов в месяц", "Обновление каждый час", "История за 12 месяцев", "CRM-интеграция и ROMI", "Недельные сводки на почту"],
+    features: ["Все 7 блоков", "10 000 запросов в месяц", "Обновление каждый час", "История за 12 месяцев", "CRM-интеграция и ROMI", "Недельные сводки на почту"],
     best: true
   },
   {
@@ -1357,6 +1572,16 @@ const API_FORMS = {
       { key: "json", label: "JSON-ключ сервисного аккаунта", ph: "{ \"type\": \"service_account\", ... }", mono: true, area: true }
     ]
   },
+  social: {
+    title: "Социальные сети", auth: "Токены площадок",
+    note: "Для VK нужен сервисный токен сообщества с правом stats, для Telegram — токен бота-администратора канала. Остальные площадки подключаются по тем же токенам на чтение.",
+    fields: [
+      { key: "vk", label: "VK · сервисный токен", ph: "vk1.a.AbCdEf...", mono: true },
+      { key: "vkgroup", label: "ID сообщества VK", ph: "-123456789" },
+      { key: "tg", label: "Telegram · токен бота", ph: "7412345678:AAH...", mono: true },
+      { key: "ig", label: "Instagram · токен бизнес-аккаунта", ph: "IGQVJYeHR...", mono: true }
+    ]
+  },
   mktg: {
     title: "Аналитика маркетинга", auth: "Ключ не требуется",
     note: "Блок считает данные уже подключённых источников. Отдельный API-ключ не нужен — достаточно включить его.",
@@ -1394,6 +1619,12 @@ const FACTS = {
     { label: "Ключевые метрики", value: "Пользователи, события, воронки" },
     { label: "Обновление", value: "каждые 4 часа" }
   ],
+  social: [
+    { label: "Тип канала", value: "Органика и контент в соцсетях" },
+    { label: "Источник данных", value: "API площадок, только чтение" },
+    { label: "Ключевые метрики", value: "Подписчики, охват, ER, заявки" },
+    { label: "Обновление", value: "каждые 3 часа" }
+  ],
   mktg: [
     { label: "Тип блока", value: "Сводный отчёт по всем каналам" },
     { label: "Источник данных", value: "подключённые блоки Kotler" },
@@ -1411,7 +1642,8 @@ const SVG = {
   pulse: [["path", { d: "M3.5 13.5h3l2.5-6 3 9 2.5-5h4", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round" }]],
   user: [["circle", { cx: 11, cy: 8, r: 3.4 }], ["path", { d: "M4.5 19a6.5 6.5 0 0 1 13 0z" }]],
   book: [["path", { d: "M4 4.5h5a2.5 2.5 0 0 1 2 2v11a2 2 0 0 0-2-1.6H4zM18 4.5h-5a2.5 2.5 0 0 0-2 2v11a2 2 0 0 1 2-1.6h5z", fill: "none", stroke: "currentColor", strokeWidth: 1.8, strokeLinejoin: "round" }]],
-  home: [["path", { d: "M4 10.5L11 5l7 5.5V18h-4.6v-4.4H8.6V18H4z" }]]
+  home: [["path", { d: "M4 10.5L11 5l7 5.5V18h-4.6v-4.4H8.6V18H4z" }]],
+  share: [["path", { d: "M8.1 9.9l5.8-2.9M8.1 12.1l5.8 2.9", fill: "none", stroke: "currentColor", strokeWidth: 1.8, strokeLinecap: "round" }], ["circle", { cx: 5.8, cy: 11, r: 2.7 }], ["circle", { cx: 16.2, cy: 6, r: 2.7 }], ["circle", { cx: 16.2, cy: 16, r: 2.7 }]]
 };
 
 class Component extends DCLogic {
@@ -1429,7 +1661,7 @@ class Component extends DCLogic {
     paletteOpen: false,
     query: "",
     sel: 0,
-    connected: { metrika: true, gads: true, video: true, mktg: true, direct: false, ga: false },
+    connected: { metrika: true, gads: true, video: true, mktg: true, social: true, direct: false, ga: false },
     notify: true,
     weekly: false,
     loading: null,
@@ -1830,6 +2062,44 @@ class Component extends DCLogic {
     };
   }
 
+  recVals(view) {
+    const narrow = this.state.narrow;
+    const isMktg = view === "mktg";
+    const set = RECS[view];
+    if (!isMktg && !set) return { show: false, hasItems: false, hasStrategy: false, items: [], pillars: [], digest: [] };
+    if (!this.isConnected(view) || this.state.loading === view) return { show: false, hasItems: false, hasStrategy: false, items: [], pillars: [], digest: [] };
+    const prio = {
+      high: { label: "Сделать сейчас", bg: "var(--k-soft)", fg: "var(--k-soft-fg)" },
+      mid: { label: "На этой неделе", bg: "var(--k-bg2)", fg: "var(--k-fg)" },
+      low: { label: "Когда будет время", bg: "var(--k-bg2)", fg: "var(--k-fg2)" }
+    };
+    const items = (set ? set.items : []).map((r, i) => {
+      const p = prio[r.p] || prio.mid;
+      return {
+        title: r.title, text: r.text, effect: r.effect, prio: p.label,
+        prioStyle: "display:inline-flex;flex:none;align-items:center;white-space:nowrap;font-size:11px;font-weight:600;padding:4px 10px;border-radius:999px;background:" + p.bg + ";color:" + p.fg,
+        cardStyle: "display:flex;flex-direction:column;gap:9px;border:1px solid var(--k-line);border-radius:13px;padding:16px 17px;background:var(--k-card);transition:border-color 200ms ease,box-shadow 200ms ease;animation:kRise 380ms cubic-bezier(.2,.8,.2,1) both " + (i * 55) + "ms",
+        ask: () => this.sendChat(r.title + " — покажи данные и посчитай эффект")
+      };
+    });
+    const map = { "Директ": "direct", "Google Ads": "gads", "Метрика": "metrika", "GA4": "ga", "Соцсети": "social", "Видео": "video" };
+    return {
+      show: true,
+      hasItems: items.length > 0,
+      items,
+      sub: set ? set.sub : "",
+      count: items.length + (items.length === 1 ? " пункт" : (items.length < 5 ? " пункта" : " пунктов")),
+      hasStrategy: isMktg,
+      strategyTitle: STRATEGY.headline,
+      strategyText: STRATEGY.text,
+      note: STRATEGY.note,
+      pillarCols: narrow ? "1fr" : "repeat(3,1fr)",
+      digestCols: narrow ? "1fr" : "1fr 1fr",
+      pillars: STRATEGY.pillars.map((p, i) => ({ n: p.n, title: p.title, text: p.text, metric: p.metric, delay: (i * 70) + "ms" })),
+      digest: STRATEGY.digest.map((d) => ({ src: d.src, text: d.text, open: () => this.open(map[d.src] || "home") }))
+    };
+  }
+
   renderVals() {
     const st = this.state;
     const view = st.view;
@@ -2058,7 +2328,7 @@ class Component extends DCLogic {
           open: !!st.authOpen,
           isReg: isReg,
           title: isReg ? "Регистрация" : "Вход в Kotler",
-          subtitle: isReg ? "Создайте аккаунт для доступа к ИИ." : "После входа чат идёт в OpenRouter через бэкенд.",
+          subtitle: isReg ? "Создайте аккаунт для доступа к ИИ." : "После входа чат идёт в бэкенд (DeepSeek / ваша модель).",
           username: st.authUser || "",
           email: st.authEmail || "",
           password: st.authPass || "",
@@ -2205,7 +2475,7 @@ class Component extends DCLogic {
       usagePct: "68%",
       planRows: [
         { label: "Запросов в этом месяце", value: "6 810 из 10 000" },
-        { label: "Подключённых блоков", value: Object.keys(st.connected).filter((k) => st.connected[k]).length + " из 6" },
+        { label: "Подключённых блоков", value: Object.keys(st.connected).filter((k) => st.connected[k]).length + " из 7" },
         { label: "Обновление данных", value: "каждый час" }
       ],
       profileBtnStyle: "display:flex;align-items:center;gap:12px;border:0;cursor:pointer;border-radius:12px;height:40px;padding:" +
@@ -2224,6 +2494,7 @@ class Component extends DCLogic {
       showMktg: view === "mktg" && this.isConnected("mktg") && st.loading !== "mktg",
       showDeep: !!DEEP[view] && this.isConnected(view) && st.loading !== view,
       deep: this.deepVals(view),
+      recs: this.recVals(view),
       mk: this.mktgData(),
       sidebarStyle: "flex:none;width:" + width + "px;display:flex;flex-direction:column;padding:16px 12px;border-right:1px solid var(--k-line);background:var(--k-bg2);transition:width 240ms ease;z-index:20;" +
         (st.short ? "overflow-y:auto;overflow-x:hidden;" : "overflow:visible;"),

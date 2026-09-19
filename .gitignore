@@ -9,9 +9,10 @@
 # Local-only docs (not published to GitHub)
 PROJECT.md
 
-# IDE
+# IDE / Cursor (local agent rules — не публиковать)
 **/.idea/
 **/*.iml
+.cursor/
 
 # TLS private keys / certs
 *.key
