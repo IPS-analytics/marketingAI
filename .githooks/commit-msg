@@ -1,0 +1,11 @@
+#!/bin/sh
+# Strip Cursor / cursoragent co-author trailers so commits stay under your GitHub identity.
+MSG_FILE="$1"
+[ -f "$MSG_FILE" ] || exit 0
+tmp=$(mktemp)
+# Remove Co-authored-by / Made-with lines mentioning Cursor
+grep -v -E '^[[:space:]]*(Co-authored-by:.*[Cc]ursor|Made-with:[[:space:]]*Cursor|Made with Cursor)' "$MSG_FILE" > "$tmp" || true
+# Also drop empty trailer separator noise left behind at end
+# (keep message body intact)
+mv "$tmp" "$MSG_FILE"
+exit 0
